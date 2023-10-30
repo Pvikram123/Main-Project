@@ -20,10 +20,8 @@ public class LoginUsingJWTService {
         if (checkEmail != null) {
             BCryptPasswordEncoder check = new BCryptPasswordEncoder();
             check.matches(signUpForm.getUserPassword(), checkEmail.getUserPassword());
-            String Token= jwtConfiguration.creatingJWT(signUpForm);
-
             HttpHeaders headers=new HttpHeaders();
-            headers.set("Authorization","Bearer "+jwtConfiguration.creatingJWT(signUpForm));
+            headers.set("Authorization",""+jwtConfiguration.creatingJWT(signUpForm));
            return headers;
 
         }

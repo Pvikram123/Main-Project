@@ -19,18 +19,18 @@ public class SignUpFormController {
 @Autowired
 private EmailService emailService;
 
-   @RequestMapping(value = "/add",method = RequestMethod.GET)
-    private String sendmailToUser(@RequestBody SignUpForm gettingData){
-        return signUpFormService.sendMail(gettingData).toString();
-   }
-    @RequestMapping(value = "/reister",method = RequestMethod.POST)
+//   @RequestMapping(value = "/add",method = RequestMethod.GET)
+//    private String sendmailToUser(@RequestBody SignUpForm gettingData){
+//        return signUpFormService.sendMail(gettingData).toString();
+//   }
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
     public String sendingData(@RequestBody SignUpForm signUpForm){
     return signUpFormService.sendingData(signUpForm);
 
   }
   @RequestMapping(value = "/confirm-account",method = {RequestMethod.GET,RequestMethod.POST})
     public String ConformUserAccount(@RequestParam("token") String userdata){
-       return signUpFormService.conformuseraccount(userdata);
+       return signUpFormService.conformUserAccount(userdata);
 
     }
 

@@ -41,10 +41,7 @@ public class SignUpForm {
     private  String userDateOfBirth;
 
     private  boolean isEnabled;
+    private String salt;
 
-//    public void encryptPassword() {
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        this.userPassword = encoder.encode(this.userPassword);
-//    }
 
 }

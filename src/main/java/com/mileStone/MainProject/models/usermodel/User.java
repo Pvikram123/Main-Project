@@ -1,7 +1,9 @@
-package com.mileStone.MainProject.models;
+package com.mileStone.MainProject.models.usermodel;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -17,14 +19,13 @@ public class User {
     private String  phoneNumber;
     private String  password;
     private String  reEntryPassword;
-    private String  following;
-    private String   followers;
-    private String  tokenUpdate;
+    private String  tokenupdate;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "join_data",referencedColumnName = "userName")
+    private List<UserRequest> userRequest;
 
 
-//    @OneToMany
-//    @JoinColumn(name = "edit",referencedColumnName = "INC")
-//    private List<UserRequest> userRequest;
+
 
 
 }

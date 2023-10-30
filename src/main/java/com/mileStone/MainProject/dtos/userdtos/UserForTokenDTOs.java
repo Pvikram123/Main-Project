@@ -1,4 +1,4 @@
-package com.mileStone.MainProject.dtos;
+package com.mileStone.MainProject.dtos.userdtos;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

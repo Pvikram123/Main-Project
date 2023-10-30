@@ -28,7 +28,7 @@ public class ForgotPasswordService {
           data.setTo(checkEmail.getEmailId());
           data.setFrom(name);
           data.setSubject("Reset your password");
-          data.setText("click here to reset your Password "+"http://localhost:5000/resetpassword");
+          data.setText("click here to reset your Password "+"http://localhost:5000/resetPassword");
           emailService.sendEmail(data);
           return ("email is send to your register mail");
       }
@@ -38,9 +38,9 @@ public class ForgotPasswordService {
     }
     public String UpdatePassword(SignUpForm data){
        SignUpForm checkemail=signUpFormRepository.findByEmailIdIgnoreCase(data.getEmailId());
-        SignUpForm reenter = checkemail;
-        reenter.setUserPassword(passwordEncoder.encode(data.getUserPassword()));
-        signUpFormRepository.save(reenter);
+        SignUpForm reEnter = checkemail;
+        reEnter.setUserPassword(passwordEncoder.encode(data.getUserPassword()));
+        signUpFormRepository.save(reEnter);
         return ("new password is updated");
     }
 }

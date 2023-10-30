@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Component
 public class JwtConfiguration {
-    private static String Key = "seceretKey";
+    private static final String secretKey= "secretKey";
     private long expire = 5 * 60;
 
 
@@ -30,7 +30,7 @@ public class JwtConfiguration {
             claims.put("emailId", signUpForm.getEmailId());
             return Jwts.builder()
                     .setClaims(claims)
-                    .signWith(SignatureAlgorithm.HS256, Key)
+                    .signWith(SignatureAlgorithm.HS256, secretKey)
                     .compact();
         } catch (Exception e) {
             throw new AccessDeniedException("Access Denied");
@@ -40,7 +40,7 @@ public class JwtConfiguration {
     public Claims verify(String authorization) throws Exception {
 
         try {
-          Claims claims=  Jwts.parser().setSigningKey(Key).parseClaimsJws(authorization).getBody();
+          Claims claims=  Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authorization).getBody();
             return claims;
         } catch (Exception e) {
             throw new AccessDeniedException("Access Denied");

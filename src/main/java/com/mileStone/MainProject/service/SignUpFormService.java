@@ -1,5 +1,6 @@
 package com.mileStone.MainProject.service;
 
+import com.mileStone.MainProject.config.PasswordEncrypt;
 import com.mileStone.MainProject.models.CreatingToken;
 import com.mileStone.MainProject.models.SignUpForm;
 import com.mileStone.MainProject.repository.signupformrepository.CreatingTokenRepository;
@@ -24,35 +25,21 @@ public class SignUpFormService {
     private CreatingTokenRepository creatingTokenRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PasswordEncrypt passwordEncrypt;
 
 
 
-    public String emailforsender="srivikram02@gmail.com";
-
-    public String addData(SignUpForm data){
-        data.setUserPassword(passwordEncoder.encode(data.getUserPassword()));
-        signUpFormRepository.save(data);
-        return ("All the data is saved");
-    }
-
-    public Object  sendMail(SignUpForm signUpForm) {
-        SimpleMailMessage data = new SimpleMailMessage();
-        data.setFrom(emailforsender);
-        data.setTo(signUpForm.getEmailId());
-        data.setSubject("its wprking are not");
-        data.setText(String.valueOf(signUpForm));
-        javaMailSender.send(data);
-        return ("message is send final");
-    }
     public String sendingData(SignUpForm signUpForm){
-        SignUpForm existinguser= signUpFormRepository.findByEmailIdIgnoreCase(signUpForm.getEmailId());
-        if(existinguser!=null){
+        SignUpForm existingUser= signUpFormRepository.findByEmailIdIgnoreCase(signUpForm.getEmailId());
+        if(existingUser!=null){
             return ("the email is exist");
         }
         else {
-            signUpForm.setUserPassword(passwordEncoder.encode(signUpForm.getUserPassword()));
+            String salt= String.valueOf(passwordEncrypt.passwordEncripted());
+            signUpForm.setUserPassword(passwordEncoder.encode(salt+signUpForm.getUserPassword()));
+            signUpForm.setSalt(salt);
             signUpFormRepository.save(signUpForm);
-
             CreatingToken creatingToken=new CreatingToken(signUpForm);
             creatingTokenRepository.save(creatingToken);
 
@@ -70,10 +57,10 @@ public class SignUpFormService {
 
     }
 
-    public String conformuseraccount(String userdata) {
-        CreatingToken token = creatingTokenRepository.findByConfirmationToken(userdata);
+    public String conformUserAccount(String userdata) {
+       CreatingToken token = creatingTokenRepository.findByConfirmationToken(userdata);
         if (token == null) {
-            System.out.println(token);
+
 
             return ("the id is in valid");
         } else {

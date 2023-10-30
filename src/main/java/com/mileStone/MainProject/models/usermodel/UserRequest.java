@@ -1,4 +1,4 @@
-package com.mileStone.MainProject.models;
+package com.mileStone.MainProject.models.usermodel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

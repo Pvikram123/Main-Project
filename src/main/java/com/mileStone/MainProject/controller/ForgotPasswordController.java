@@ -16,7 +16,7 @@ public class ForgotPasswordController {
     public String sendmail(@RequestBody SignUpForm data){
         return forgotPasswordService.forgotPassword(data);
     }
-    @RequestMapping(value = "/resetpassword",method = RequestMethod.PUT)
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.PUT)
     public String update(@RequestBody SignUpForm data){
         return forgotPasswordService.UpdatePassword(data);
     }

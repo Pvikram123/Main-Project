@@ -16,7 +16,7 @@ public class UsingjwtLoginController {
     String Skey="seceretKey";
 
 
-    @RequestMapping(value = "checking",method = RequestMethod.GET)
+    @RequestMapping(value = "/checking",method = RequestMethod.GET)
     public String getting(@RequestBody String token){
       return ("get");
     }

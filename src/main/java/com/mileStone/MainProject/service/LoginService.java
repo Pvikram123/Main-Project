@@ -19,7 +19,7 @@ private SignUpFormRepository signUpFormRepository;
         if(checkEmail !=null) {
             BCryptPasswordEncoder check = new BCryptPasswordEncoder();
             check.matches(signUpForm.getUserPassword(), checkEmail.getUserPassword());
-                return ("user register");
+                return ("Tanks for login");
         }
         else {
             return ("user details are not valid");

@@ -1,7 +1,6 @@
-package com.mileStone.MainProject.models;
+package com.mileStone.MainProject.models.usermodel;
 
-
-import com.mileStone.MainProject.dtos.UserForTokenDTOs;
+import com.mileStone.MainProject.dtos.userdtos.UserForTokenDTOs;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
@@ -17,7 +16,7 @@ public class CreatingTokenUser {
     private int tokenId;
 
     @Column(name = "conformationToken")
-    private String confirmationToken;
+    private String creatingConfirmationToken;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -27,15 +26,12 @@ public class CreatingTokenUser {
     private UserForTokenDTOs userForTokenDTOs;
 
     private  String username;
-
     public CreatingTokenUser() {
     }
 
     public CreatingTokenUser(UserForTokenDTOs user) {
-        confirmationToken = UUID.randomUUID().toString();
+        creatingConfirmationToken = UUID.randomUUID().toString();
         createdDate = new Date();
         this.userForTokenDTOs = user;
     }
-
-
 }
