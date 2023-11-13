@@ -26,7 +26,7 @@ public class UserFeedService {
  //       UserFeed saveAll=userFeedRepository.findByUserId(id);
         UserFeed saveAll=new UserFeed();
         saveAll.setImageData(file.getBytes());
-        User userId=userRepository.findByTokenupdate(token);
+        User userId=userRepository.findByTokenUpdate(token);
         saveAll.setDescription(description);
         saveAll.setCategory(category);
         saveAll.setUserId(userId.getId());

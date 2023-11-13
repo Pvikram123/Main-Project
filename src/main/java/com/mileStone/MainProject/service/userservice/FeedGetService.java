@@ -24,7 +24,7 @@ public class FeedGetService {
     public Object privateFeed(String token) {
         String visibility = "Private";
 
-        User information=userRepository.findByTokenupdate(token);
+        User information=userRepository.findByTokenUpdate(token);
         long number=information.getId();
         if (information!=null){
             List<UserFeed> data=userFeedRepository.findByVisibility(visibility);
@@ -34,7 +34,7 @@ public class FeedGetService {
         return ("the data is private");
     }
     public  String userFeedDelete(long id,String token){
-        User information=userRepository.findByTokenupdate(token);
+        User information=userRepository.findByTokenUpdate(token);
         if ((information!=null)) {
             userFeedRepository.deleteById(id);
             return ("its deleted");

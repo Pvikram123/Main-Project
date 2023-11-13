@@ -15,4 +15,6 @@ public class UserRequest {
     private String follow;
     private String givenByName;
     private boolean isEnable;
+
+
 }

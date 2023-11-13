@@ -13,4 +13,5 @@ public class UserNameDTOs {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String  userName;
+    private String password;
 }

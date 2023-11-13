@@ -12,6 +12,9 @@ public class SecurityConfig {
     SecurityFilterChain configure(HttpSecurity security) throws Exception {
         return security
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.anyRequest().permitAll()).build();
+                .authorizeHttpRequests(req -> req
+                        .anyRequest().permitAll())
+                .build();
+
     }
 }
