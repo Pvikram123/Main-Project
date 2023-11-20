@@ -1,7 +1,6 @@
 package com.mileStone.MainProject.controller;
 
 import com.itextpdf.text.DocumentException;
-import com.mileStone.MainProject.dtos.Path;
 import com.mileStone.MainProject.exporter.CSVExport;
 import com.mileStone.MainProject.exporter.CSVImport;
 import com.mileStone.MainProject.exporter.PdfExport;

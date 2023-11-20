@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,12 +49,17 @@ public class UserService {
 
     }
 
-    public List<Object> getUsernames(String token) {
+    public List<Object> getUsernames(String token) throws Exception{
 
-        User name=userRepository.findByTokenUpdate(token);
-        List<User> users = userRepository.findAll();
+           User name=userRepository.findByTokenUpdate(token);
+           if (name!=null) {
+               List<User> users = userRepository.findAll();
 
-        return users.stream().map(m->m.getUserNameData()).collect(Collectors.toList());
+               return users.stream().map(m -> m.getUserNameData()).collect(Collectors.toList());
+           }else {
+               return Collections.singletonList(("the token is not valid"));
+           }
+
 
     }
     public Object login(User data) {
@@ -69,15 +75,12 @@ public class UserService {
                 data1.setTokenUpdate(creatingTokenUser.getCreatingConfirmationToken());
                 userRepository.save(data1);
                 HttpHeaders headers=new HttpHeaders();
-                headers.set("Authorization",""+jwtConfigurationForUser.creatingJWT(data));
+                headers.set( "Authorization",""+jwtConfigurationForUser.creatingJWT(data));
                 return headers;
-                //return ("http://localhost:5000/friendRequestUser?token=" + creatingTokenUser.getCreatingConfirmationToken());
-
+//                return ("http://localhost:5000/friendRequestUser?token=" + creatingTokenUser.getCreatingConfirmationToken())
             } else {
                 return ("password is wrong");
-
             }
-
         }
         return ("username is not valid");
 
@@ -89,7 +92,7 @@ public class UserService {
             UserRequest friend = new UserRequest();
             friend.setFollow(user.getUserName());
             friend.setGivenByName(allData.getUserNameData());
-            userRequestRepository.save(friend);
+             userRequestRepository.save(friend);
             return ("Request is Send");
         }
         return ("token not found");
@@ -103,32 +106,42 @@ public class UserService {
 
     public Object acceptFriendRequest(UserNameDTOs userNameDTOs,String token) {
         User data=userRepository.findByTokenUpdate(token);
-       List<UserRequest> data1=userRequestRepository.findAllByFollow(data.getUserNameData());
-        List<UserRequest> filteredRequests = data1.stream()
-                .filter(request -> request.getGivenByName().equals(userNameDTOs.getUserName()))
-                .toList();
-        if (!filteredRequests.isEmpty()) {
-            UserRequest data3 = filteredRequests.get(0);
-            data3.setEnable(true);
-            userRequestRepository.save(data3);
-            return data1;
-
+        if(data!=null) {
+            List<UserRequest> data1 = userRequestRepository.findAllByFollow(data.getUserNameData());
+            if (data1!=null) {
+                List<UserRequest> filteredRequests = data1.stream()
+                        .filter(request -> request.getGivenByName().equals(userNameDTOs.getUserName()))
+                        .toList();
+                    UserRequest data3 = filteredRequests.get(0);
+                    data3.setEnable(true);
+                    userRequestRepository.save(data3);
+                    return data1;
+            }else {
+                return ("There is no friend request");
+            }
+        }else {
+            return ("go and login first(or)user name is valid");
         }
-        return ("request is never accepted");
-
     }
 
     public String rejectFriendRequest(UserNameDTOs userNameDTOs,String token) {
         User data1=userRepository.findByTokenUpdate(token);
-        List<UserRequest> data2=userRequestRepository.findAllByFollow(data1.getUserNameData());
-        List<UserRequest> data3=data2.stream()
-                .filter(a->a.getFollow().equals(userNameDTOs.getUserName()))
-                .toList();
-        UserRequest data4 = data3.get(0);
-        userRequestRepository.deleteByGivenByName(data4.getGivenByName());
-        return ("its deleted");
+        if(data1!=null) {
+            List<UserRequest> data2 = userRequestRepository.findAllByFollow(data1.getUserNameData());
+            List<UserRequest> data3 = data2.stream()
+                    .filter(a -> a.getFollow().equals(userNameDTOs.getUserName()))
+                    .toList();
+            UserRequest data4 = data3.get(0);
+                userRequestRepository.deleteByGivenByName(data4.getGivenByName());
+                return ("its deleted");
+        }else {
+            return ("friend request is not there");
+        }
     }
     public String logout(){
     return null;
     }
+
+
+
 }
