@@ -3,7 +3,6 @@ package com.mileStone.MainProject.controller;
 import com.mileStone.MainProject.models.SignUpForm;
 import com.mileStone.MainProject.service.EmailService;
 import com.mileStone.MainProject.service.SignUpFormService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
