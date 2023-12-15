@@ -5,3 +5,4 @@ COPY out/artifacts/MainProject_jar/MainProject.jar .
 EXPOSE 5000
 
 CMD ["java", "-jar", "/app/MainProject.jar"]
+

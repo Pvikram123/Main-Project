@@ -7,10 +7,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.mileStone.MainProject.models.usermodel.User;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-
+@Service
 public class PdfExport {
         public static void export(List<User> users, HttpServletResponse response) throws IOException, DocumentException {
             response.setContentType("application/pdf");

@@ -2,6 +2,7 @@ package com.mileStone.MainProject.service.userservice;
 
 
 import com.mileStone.MainProject.config.JwtConfigurationForUser;
+import com.mileStone.MainProject.dtos.UserDto;
 import com.mileStone.MainProject.dtos.userdtos.UserForTokenDTOs;
 import com.mileStone.MainProject.dtos.userdtos.UserNameDTOs;
 import com.mileStone.MainProject.models.usermodel.CreatingTokenUser;
@@ -41,7 +42,7 @@ public class UserService {
         data.setPhoneNumber(user.getPhoneNumber());
         data.setLastName(user.getLastName());
         data.setReEntryPassword(user.getReEntryPassword());
-        data.setRole(user.getRole());
+        data.setRole(name);
 
         userRepository.save(data);
         return ("its done");
@@ -137,6 +138,13 @@ public class UserService {
         }else {
             return ("friend request is not there");
         }
+    }
+
+    public String changeRole(UserDto userDto){
+       User data1= userRepository.findByUserNameData(userDto.getName1());
+       data1.setRole(userDto.getRole());
+       userRepository.save(data1);
+       return "The role has been updated";
     }
     public String logout(){
     return null;

@@ -7,12 +7,9 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
-@Entity
 public class UserDto {
-    private String Username;
-    private String Dateofbirth;
-    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String name1;
+    private String role;
+
 
 }

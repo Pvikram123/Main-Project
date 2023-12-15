@@ -2,6 +2,7 @@ package com.mileStone.MainProject.controller.user;
 
 
 import com.mileStone.MainProject.config.JwtConfigurationForUser;
+import com.mileStone.MainProject.dtos.UserDto;
 import com.mileStone.MainProject.dtos.userdtos.UserNameDTOs;
 import com.mileStone.MainProject.models.usermodel.User;
 import com.mileStone.MainProject.service.userservice.UserService;
@@ -78,5 +79,29 @@ public class UserController {
     public String delete(@RequestBody UserNameDTOs UserNameDTOs, @RequestParam("token") String token) {
         return userService.rejectFriendRequest(UserNameDTOs, token);
     }
+    @RequestMapping(value = "/change", method = RequestMethod.POST)
+    public String changeRole(@RequestHeader(value = "Authorization") String string, @RequestBody UserDto data) throws Exception {
+        try {
+            jwtConfigurationForUser.verify(string);
+            Jws<Claims> claimsJws = Jwts.parser()
+                    .setSigningKey(Name)
+                    .parseClaimsJws(string);
+            Claims claims = claimsJws.getBody();
+            String role = (String) claims.get("role");
+            if (role.equals("ADMIN")){
+        return userService.changeRole(data);
+            }
+            else {
+                return ("you don't have access");
+            }
+
+        } catch (SignatureException e) {
+            // Handle invalid signature
+            throw new Exception("Invalid token signature");
+        } catch (Exception e) {
+            throw new Exception("verify your token " );
+        }
+    }
+
 
 }

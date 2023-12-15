@@ -18,19 +18,21 @@ public class ScheduleEmailService {
     EmailService emailService;
 
 private String email="srivikram02@gmail.com";
-//    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000)
     public Object demo(){
 
       List<User> find= userRepository.findAll();
-      List<String> Data1= find.stream().map(m->m.getEmailId()).toList();
-            SimpleMailMessage data2 = new SimpleMailMessage();
-            data2.setFrom(email);
-            data2.setTo(Data1.toArray(new String[0]));
-            data2.setSubject("i send email for all the cron");
-            data2.setText("using cron I send the email for all  ");
-            emailService.sendEmail(data2);
-       return ("true");
+      for (User user:find) {
+          SimpleMailMessage data2 = new SimpleMailMessage();
+          data2.setFrom(email);
+          data2.setTo(user.getEmailId());
+          data2.setSubject("i send email for all the cron");
+          data2.setText("hi "+user.getUserNameData()+"using cron I send the email for you");
+          emailService.sendEmail(data2);
+          return ("the email is send to "+user.getUserNameData());
 
+      }
+      return null;
     }
     public String del(){
         userRepository.deleteAll();

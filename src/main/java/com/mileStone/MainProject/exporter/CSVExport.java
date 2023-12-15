@@ -8,11 +8,12 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.User;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
+@Service
 public class CSVExport {
     public static void export(List<User> users, HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
